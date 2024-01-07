@@ -3,6 +3,8 @@ from flask import request
 from flask_cors import CORS, cross_origin
 import os
 
+
+
 from services.home_activities import *
 from services.user_activities import *
 from services.create_activity import *
@@ -12,6 +14,7 @@ from services.message_groups import *
 from services.messages import *
 from services.create_message import *
 from services.show_activity import *
+
 from opentelemetry import trace
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
 from opentelemetry.instrumentation.requests import RequestsInstrumentor
@@ -19,15 +22,15 @@ from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExport
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 
+from opentelemetry.sdk.trace.export import ConsoleSpanProcessor
 from opentelemetry.sdk.trace.export import SimpleSpanProcessor
-provider=TracerProvider()
-processor=BatchSpanProcessor(OTLPSpanExporter())
-provider.add_span_processor(processor)
-trace.set_tracer_provider(provider)
-tracer=trace.get_tracer(__name__)
+
 provider = TracerProvider()
 processor = BatchSpanProcessor(OTLPSpanExporter())
 provider.add_span_processor(processor)
+
+simple_processor = SimpleSpanProcessor(ConsloleSpanExporter())
+provider.add_span_processor(simple_processor)
 
 trace.set_tracer_provider(provider)
 tracer = trace.get_tracer(__name__)
