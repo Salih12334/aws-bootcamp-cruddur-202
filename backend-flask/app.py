@@ -12,8 +12,22 @@ from services.message_groups import *
 from services.messages import *
 from services.create_message import *
 from services.show_activity import *
+from opentelemery import trace
+from opentelemery.instrumentation.flask import FlaskInstrumentor
+from opentelemery.instrumentation.requests import RequestInstrumentor
+from opentelemery.exporter.otlp.http.trace_exporter import OTLPSpanExporter
+from opentelemery.sdk.trace import TraceProvider
+from opentelemery.sdk.trace.export import BatchSpanProcessor
+provider=TraceProvider()
+processor=BatchSpanProcessor(OTLPSpanExporter())
+provider.add_span_processor(processor)
+trace.set_tracer_provider(provider)
+tracer=trace.get_tracer(__name__)
+
 
 app = Flask(__name__)
+FlaskInstrumentor().instrument_app(app)
+RequestInstrumentor().instrument()
 frontend = os.getenv('FRONTEND_URL')
 backend = os.getenv('BACKEND_URL')
 origins = [frontend, backend]
