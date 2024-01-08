@@ -3,7 +3,7 @@ from opentelemetry import trace
 tracer=trace.get_tracer("home.activities")
 class HomeActivities:
   def run():
-    with tracer.start_as_current_span("http-handler"):
+    with tracer.start_as_current_span("home-activities-mock-data"):
       now = datetime.now(timezone.utc).astimezone()
     results = [{
       'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eee',
