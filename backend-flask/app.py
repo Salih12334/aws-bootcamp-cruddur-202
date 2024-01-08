@@ -13,8 +13,7 @@ from services.search_activities import *
 from services.message_groups import *
 from services.messages import *
 from services.create_message import *
-from services.show_activity import *
-from services.notification_activity import *
+from services.message_groups import *
 
 from opentelemetry import trace
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
@@ -89,10 +88,7 @@ def data_home():
   return data, 200
 
 
-@app.route("/api/activities/notifications", methods=['GET'])
-def data_notificaitons():
-  data = NotificationActivities.run()
-  return data, 200
+
 
 @app.route("/api/activities/@<string:handle>", methods=['GET'])
 def data_handle(handle):
