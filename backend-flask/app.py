@@ -14,7 +14,7 @@ from services.message_groups import *
 from services.messages import *
 from services.create_message import *
 from services.show_activity import *
-from services.notifications_activity import *
+from services.notification_activity import *
 
 from opentelemetry import trace
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
